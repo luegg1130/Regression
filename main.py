@@ -1,8 +1,9 @@
 import sys
 import csv
+import numpy as np
 
-train_addr = 'D:/work/AI/python/Predict_PM2.5/train.csv'
-test_addr = 'D:/work/AI/python/Predict_PM2.5/test.csv'
+train_addr = 'D:/work/AI/python/Predict_PM2.5/Regression/train.csv'
+test_addr = 'D:/work/AI/python/Predict_PM2.5/Regression/test.csv'
 
 #read data
 train_data = []
@@ -34,6 +35,8 @@ for mon in range(12):
             for hr in range(9):
                 x[mon*471+data_m].append(train_data[data_type][mon*480+data_m+hr])
         y.append(train_data[9][mon*480+data_m+9])
+x = np.array(x)
+y = np.array(y)
 
 
 
