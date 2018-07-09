@@ -39,6 +39,9 @@ for mon in range(12):
 x = np.array(x)
 y = np.array(y)
 
+#add square term
+x = np.concatenate((x, x**2), axis=1)
+
 #add bias
 x = np.concatenate((np.ones((x.shape[0], 1)), x), axis=1)
 
@@ -49,6 +52,7 @@ repeat = 10000
 
 x_t = x.transpose()
 s_gra = np.zeros(len(x[0]))
+cost_show = []
 #start learning
 for i in range(repeat):
     hypo = np.dot(x, w)
@@ -59,6 +63,7 @@ for i in range(repeat):
     s_gra += gra ** 2
     ada = np.sqrt(s_gra)
     w = w + l_rate * (gra / ada)
+    cost_show.append((i, cost))
     print('iteration: %d | cost: %f  ' %(i, cost))
 
 
@@ -87,6 +92,9 @@ for r in rows:
 txt.close()
 x_test = np.array(test)
 
+#add square term
+x_test = np.concatenate((x_test, x_test**2), axis=1)
+
 #add bias
 x_test = np.concatenate((np.ones((x_test.shape[0], 1)), x_test), axis = 1)
 
@@ -105,6 +113,13 @@ for i in range(len(ans)):
     wt.writerow(ans[i])
 txt.close()
 
+#write cost
+filename = 'D:/work/AI/python/Predict_PM2.5/Regression/result/cost.csv'
+txt = open(filename, 'w+')
+wt = csv.writer(txt, delimiter=',', lineterminator='\n')
+for i in range(len(cost_show)):
+    wt.writerow(cost_show[i])
+txt.close()
 
 
 

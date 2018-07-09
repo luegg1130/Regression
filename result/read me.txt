@@ -1,0 +1,2 @@
+v1: 第一版
+v2: 加上square term
