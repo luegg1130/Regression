@@ -42,6 +42,11 @@ y = np.array(y)
 #add square term
 x = np.concatenate((x, x**2), axis=1)
 
+#normalize every term to same scaling
+x_mean = np.mean(x, axis=0)
+x_std = np.std(x, axis=0)
+x = (x - x_mean) / x_std
+
 #add bias
 x = np.concatenate((np.ones((x.shape[0], 1)), x), axis=1)
 
@@ -94,6 +99,11 @@ x_test = np.array(test)
 
 #add square term
 x_test = np.concatenate((x_test, x_test**2), axis=1)
+
+#normalize every term to same scaling
+xt_mean = np.mean(x_test, axis=0)
+xt_std = np.std(x_test, axis=0)
+x_test = (x_test - xt_mean) / xt_std
 
 #add bias
 x_test = np.concatenate((np.ones((x_test.shape[0], 1)), x_test), axis = 1)
