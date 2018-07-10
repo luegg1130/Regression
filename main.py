@@ -54,6 +54,7 @@ x = np.concatenate((np.ones((x.shape[0], 1)), x), axis=1)
 w = np.zeros(len(x[0]))
 l_rate = 10
 repeat = 10000
+lamda = 0.01
 
 x_t = x.transpose()
 s_gra = np.zeros(len(x[0]))
@@ -64,7 +65,8 @@ for i in range(repeat):
     loss = y - hypo
     cost = np.sum(loss ** 2) / len(x)
     s_cost = math.sqrt(cost)
-    gra = np.dot(x_t, loss)
+    #add regularization
+    gra = np.dot(x_t, loss) + np.sum(2 * lamda * w)
     s_gra += gra ** 2
     ada = np.sqrt(s_gra)
     w = w + l_rate * (gra / ada)
